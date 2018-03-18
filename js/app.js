@@ -2,6 +2,8 @@
 (function($) {
 	'use strict';
 
+	import * as AWSCognito from 'amazon-cognito-identity.min.js';
+
 	// Click event listeners
 	$('#btnSignUp').click(function() {
 	  signUp();

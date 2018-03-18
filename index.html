@@ -108,14 +108,17 @@
     <!-- AWS SDKs
     ================================================== -->
 	<!-- AWS Javascript SDK -->
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
+  <!-- Latest AWS Javascript SDK can be downloaded from AWS Javascript SDK github repository:-->
+	<!-- https://raw.githubusercontent.com/aws/aws-sdk-js/master/dist/aws-sdk.min.js -->  
+	<script type="module" src="https://sdk.amazonaws.com/js/aws-sdk-2.211.0.min.js"></script>
 	  
 	<!-- AWS Cognito Javascript SDK -->
+  <!-- Latest AWS Cognito Javascript SDK can be downloaded from AWS Amplify github repository:-->
 	<!-- https://raw.githubusercontent.com/aws/aws-amplify/master/packages/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js -->
-	<script src="./js/amazon-cognito-identity.min.js"></script>
+	<script type="module" src="./js/amazon-cognito-identity.min.js"></script>
 	  
 	<!-- Where the magic happens! -->
-	<script src="./js/app.js"></script>
+	<script type="module" src="./js/app.js"></script>
 	 
   </body>
 </html>
