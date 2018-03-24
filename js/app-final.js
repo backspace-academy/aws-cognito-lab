@@ -2,8 +2,6 @@
 (function($) {
 	'use strict';
 
-	var cognitoUser;
-
 	// Click event listeners
 	$('#btnSignUp').click(function() {
 	  signUp();
@@ -25,22 +23,29 @@
 	  forgotPassword();
 	});
 
+	$('#btnSync').click(function() {
+	  getCognitoSynToken();
+	});
+
 	$('#btnS3').click(function() {
 	  createObject();
 	});
 
-
 	// Region must be defined
 	AWS.config.region = 'us-east-1';
-
+	var cognitoUser;
 	// User pool
 	var poolData = {
 			UserPoolId : 'us-east-1_MYnlnSKp6', // Your user pool id here
 			ClientId : '5d3s9jg6k9rupvjddl0rjr7h8j' // Your app client id here
 	};
-
 	// Identity pool
 	var identityPoolId = "us-east-1:eba34910-30e3-4b75-8540-8ee026e6c442"
+	var identityId;
+
+	// Cognito Sync
+	var cognitosync;
+	var cognitoDatasetName = "backspace-users";
 
 	// Sign Up
 	function signUp(){
@@ -167,6 +172,7 @@
 		AWS.config.credentials.refresh((error) => {
 				if (error) {
 						 console.error(error);
+						 bootbox.alert('Unable to sign in. Please try again.')
 				} else {
 						 // Instantiate aws sdk service objects now that the credentials have been updated.
 						 // example: var s3 = new AWS.S3();
@@ -223,10 +229,6 @@ function updateProfile(){
 			{
 					Name : 'family_name',
 					Value : $('#inputFamilyName2').val()
-			},
-			{
-					Name : 'email',
-					Value : $('#inputEmail2').val()
 			},
 			{
 					Name : 'website',
@@ -312,10 +314,59 @@ function updateProfile(){
 		});
 	}
 
+	function getCognitoSynToken(){
+	  /* Other AWS SDKs will automatically use the Cognito Credentials provider */
+	  /* configured in the JavaScript SDK. */
+		var cognitoSyncToken, cognitoSyncCount;
+		identityId = AWS.config.credentials.identityId;
+	  cognitosync = new AWS.CognitoSync();
+	  cognitosync.listRecords({
+	    DatasetName: cognitoDatasetName, /* required */
+	    IdentityId: identityId,  /* required */
+	    IdentityPoolId: identityPoolId  /* required */
+	  }, function(err, data) {
+	    if (err) console.log("listRecords: " + err, err.stack); /* an error occurred */
+	      else {
+	        console.log("listRecords: " + JSON.stringify(data));
+	        cognitoSyncToken = data.SyncSessionToken;
+	        cognitoSyncCount = data.DatasetSyncCount;
+	        console.log("SyncSessionToken: " + cognitoSyncToken);           /* successful response */
+	        console.log("DatasetSyncCount: " + cognitoSyncCount);
+	        addRecord(cognitoSyncToken, cognitoSyncCount);
+	      }
+	  });
+	}
+
+function addRecord(cognitoSyncToken, cognitoSyncCount){
+	var params = {
+    DatasetName: cognitoDatasetName, /* required */
+    IdentityId: identityId, /* required */
+    IdentityPoolId: identityPoolId, /* required */
+    SyncSessionToken: cognitoSyncToken, /* required */
+    RecordPatches: [
+      {
+        Key: 'USER_ID', /* required */
+        Op: 'replace', /* required */
+        SyncCount: cognitoSyncCount, /* required */
+        Value: identityId
+      }
+    ]
+  };
+  console.log("UserID: " + identityId);
+  cognitosync.updateRecords(params, function(err, data) {
+    if (err) {
+			console.log("updateRecords: " + err, err.stack); /* an error occurred */
+		}
+    else {
+			console.log("Value: " + JSON.stringify(data));           /* successful response */
+		}
+  });
+}
+
 	function createObject(){
 		if (cognitoUser != null) {
 			console.log("Creating S3 object");
-			var identityId = AWS.config.credentials.identityId;
+			identityId = AWS.config.credentials.identityId;
 			var prefix = 'cognito/backspace-academy/' + identityId;
 			var key = prefix + '/' +  'test' + '.json';
 			console.log('Key: ' + key)
