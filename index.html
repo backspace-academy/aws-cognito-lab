@@ -1,124 +1,261 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="./images/favicon.ico">
 
     <title>BackSpace Academy Cognito Lab</title>
 
     <!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	  
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="./css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="./js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">BackSpace Academy</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
             </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button id= "btnSignIn" type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+          </li>
+        </ul>
       </div>
     </nav>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <main role="main">
+      <!-- AWS SDKs
+      ================================================== -->
+
+    	<!-- AWS Cognito Javascript SDK -->
+      <!-- Latest AWS Cognito Javascript SDK can be downloaded from AWS Amplify github repository:-->
+    	<!-- https://raw.githubusercontent.com/aws/aws-amplify/master/packages/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js -->
+    	<script src="./js/amazon-cognito-identity.min.js"></script>
+
+    	<!-- AWS Javascript SDK -->
+      <!-- Latest AWS Javascript SDK can be downloaded from AWS Javascript SDK github repository:-->
+    	<!-- https://raw.githubusercontent.com/aws/aws-sdk-js/master/dist/aws-sdk.min.js -->
+      <script src="./js/aws-sdk-2.211.0.min.js"></script>
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Hello, AWS Cognito!</h1>
+          <p>This is a Bootstrap 4 template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <p>
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#signUpModal">Sign Up! &raquo;</button>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signInModal">Sign In &raquo;</button>
+            <button id="btnSignOut" type="button" class="btn btn-info btn-lg">Sign Out &raquo;</button>
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#updateModal">Update Profile &raquo;</button>
+            <button id="btnS3" type="button" class="btn btn-info btn-lg">Create S3 Object &raquo;</button>
+          </p>
+          <a href="#"><p id="forgotPassword" class="text-primary">Forgot password</p></a>
+        </div>
+      </div>
+
       <div class="container">
-        <h1>Hello, Cognito!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a id="btnSignUp" class="btn btn-success btn-lg" href="#" role="button">Sign up &raquo;</a></p>
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+
+    <footer class="container">
+      <p>&copy; Company 2017-2018</p>
+    </footer>
+
+    <!-- Sign up modal -->
+    <div id="signUpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signUpModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="inputEmail">Email address</label>
+                <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <label for="inputGivenName">Given Name</label>
+                <input type="text" class="form-control" id="inputGivenName" placeholder="Given Name">
+              </div>
+              <div class="form-group">
+                <label for="inputFamilyName">Family Name</label>
+                <input type="text" class="form-control" id="inputFamilyName" placeholder="Family Name">
+              </div>
+              <div class="form-group">
+                <label for="inputPreferredUsername">Preferred Username</label>
+                <input type="text" class="form-control" id="inputPreferredUsername" placeholder="Preferred Username">
+              </div>
+              <div class="form-group">
+                <label for="inputWebsite">Website</label>
+                <input type="url" class="form-control" id="inputWebsite" placeholder="Enter address">
+              </div>
+              <div class="form-group">
+                <label for="inputGender">Gender</label>
+                <input type="text" class="form-control" id="inputGender" placeholder="Enter male or female">
+              </div>
+              <div class="form-group">
+                <label for="inputBirthdate">Birthdate</label>
+                <input type="date" class="form-control" id="inputBirthdate" placeholder="Enter birthdate">
+              </div>
+              <div class="form-group">
+                <label for="inputLinkedin">LinkedIn profile page</label>
+                <input type="url" class="form-control" id="inputLinkedin" placeholder="Enter LinkedIn address">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button id="btnSignUp" type="button" class="btn btn-success">Sign Up! &raquo;</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    <!-- Sign in Modal -->
+    <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signInModalLabel">Sign In</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="inputUsername">Email / Username</label>
+                <input type="text" class="form-control" id="inputUsername" placeholder="Enter Email or Username">
+              </div>
+              <div class="form-group">
+                <label for="inputPassword2">Password</label>
+                <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="btnSignIn" type="button" class="btn btn-primary">Sign in</button>
+          </div>
         </div>
       </div>
+    </div>
 
-      <hr>
-
-      <footer>
-        <p>&copy; 2016 Company, Inc.</p>
-      </footer>
-    </div> <!-- /container -->
-
+    <!-- Update modal -->
+    <div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="inputGivenName2">Given Name</label>
+                <input type="text" class="form-control" id="inputGivenName2" placeholder="Given Name">
+              </div>
+              <div class="form-group">
+                <label for="inputFamilyName2">Family Name</label>
+                <input type="text" class="form-control" id="inputFamilyName2" placeholder="Family Name">
+              </div>
+              <div class="form-group">
+                <label for="inputWebsite2">Website</label>
+                <input type="url" class="form-control" id="inputWebsite2" placeholder="Enter address">
+              </div>
+              <div class="form-group">
+                <label for="inputGender2">Gender</label>
+                <input type="text" class="form-control" id="inputGender2" placeholder="Enter male or female">
+              </div>
+              <div class="form-group">
+                <label for="inputBirthdate2">Birthdate</label>
+                <input type="date" class="form-control" id="inputBirthdate2" placeholder="Enter birthdate">
+              </div>
+              <div class="form-group">
+                <label for="inputLinkedin2">LinkedIn profile page</label>
+                <input type="url" class="form-control" id="inputLinkedin2" placeholder="Enter LinkedIn address">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button id="btnUpdate" type="button" class="btn btn-success">Update &raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"><\/script>')</script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	  <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./js/ie10-viewport-bug-workaround.js"></script>
-	
-    <!-- AWS SDKs
-    ================================================== -->
-	<!-- AWS Javascript SDK -->
-  <!-- Latest AWS Javascript SDK can be downloaded from AWS Javascript SDK github repository:-->
-	<!-- https://raw.githubusercontent.com/aws/aws-sdk-js/master/dist/aws-sdk.min.js -->  
-	<script type="module" src="https://sdk.amazonaws.com/js/aws-sdk-2.211.0.min.js"></script>
-	  
-	<!-- AWS Cognito Javascript SDK -->
-  <!-- Latest AWS Cognito Javascript SDK can be downloaded from AWS Amplify github repository:-->
-	<!-- https://raw.githubusercontent.com/aws/aws-amplify/master/packages/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js -->
-	<script type="module" src="./js/amazon-cognito-identity.min.js"></script>
-	  
-	<!-- Where the magic happens! -->
-	<script type="module" src="./js/app.js"></script>
-	 
+    <!-- Bootbox Bootstrap modal alerts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+    <!-- Where the magic happens! -->
+  	<script type="module" src="./js/app.js"></script>
+
   </body>
 </html>
