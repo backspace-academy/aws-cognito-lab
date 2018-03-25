@@ -2,6 +2,12 @@
 (function($) {
 	'use strict';
 
+	// Hide the loading spinner image.
+	$('#spinnerShow').hide();
+
+	// Show the buttons
+	$('#buttonSection').show();
+
 	// Click event listeners
 	$('#btnSignUp').click(function() {
 	  signUp();
@@ -30,6 +36,8 @@
 	$('#btnS3').click(function() {
 	  createObject();
 	});
+
+	/***************** The main code ******************/
 
 	// Region must be defined
 	AWS.config.region = 'us-east-1';

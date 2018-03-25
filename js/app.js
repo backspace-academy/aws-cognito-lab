@@ -2,7 +2,13 @@
 (function($) {
 	'use strict';
 
-	// Click event listeners
+	// Hide the loading spinner image.
+	$('#spinnerShow').hide();
+
+	// Show the buttons
+	$('#buttonSection').show();
+
+	// Click event listeners for buttons
 	$('#btnSignUp').click(function() {
 	  signUp();
 	});
@@ -31,7 +37,7 @@
 	  createObject();
 	});
 
-
+	/***************** The main code ******************/
 
 	// Sign Up
 	function signUp(){
