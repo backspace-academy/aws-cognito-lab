@@ -60,6 +60,9 @@
 	function signUp(){
 		console.log('Starting Sign up process');
 
+		// Close the modal window
+		$('#signUpModal').modal("hide");
+
 		// Get sign up information from modal
 		var userLogin = {
 			username : $('#inputPreferredUsername').val(),
@@ -101,28 +104,30 @@
 			}
 		];
 
-		console.log("Adding attributes");
-		var attributeList = [];
-		for (var a=0; a<attributes.length; ++a){
-	    var attributeTemp = new AmazonCognitoIdentity.CognitoUserAttribute(attributes[a]);
-	    attributeList.push(attributeTemp);
-		}
+		var params = {
+		  ClientId: poolData.ClientId, 	/* required */
+		  Password: userLogin.password, /* required */
+		  Username: userLogin.username, /* required */
+		  ValidationData: [],						/* required */
+		  UserAttributes: attributes
+		};
 
-		console.log("Signing up");
-		$('#signUpModal').modal("hide"); // Close the modal window
-		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    userPool.signUp(userLogin.username, userLogin.password, attributeList, null, function(err, result){
-      if (err) {
-				if (err.message == "200") // http 200 OK response, signup pending verfication
+		var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+		cognitoidentityserviceprovider.signUp(params, function(err, data) {
+		  if (err) {
+				console.log(err, err.stack); // an error occurred
+				alert('Error: '+ JSON.stringify(err));
+			}
+		  else {
+				console.log(JSON.stringify(data));           // successful response
+				if (data.UserConfirmed) {
 					bootbox.alert('Please check your email for a verification link.');
-				else
-					bootbox.alert(JSON.stringify(err.message)); // there is a problem
-      	return;
-      }
-      cognitoUser = result.user; // this response will not occur if signup pending verfication
-      console.log('user name is ' + cognitoUser.getUsername());
-			bootbox.alert('Please check your email for a verification link.');
-    });
+				}
+				else{
+					bootbox.alert('Sign up successful.');
+				}
+			}
+		});
 	}
 
 	// Sign In
@@ -154,7 +159,7 @@
 			        }
 			        if (result) {
 								createCredentials(result.getIdToken().getJwtToken());
-								console.log("Signed in successfully");
+								console.log("Signed to CognitoID in successfully");
 			        }
 			    	});
 					}
@@ -186,6 +191,7 @@
 						 // Instantiate aws sdk service objects now that the credentials have been updated.
 						 // example: var s3 = new AWS.S3();
 						 console.log('Successfully logged!');
+						 bootbox.alert('You are now signed.')
 				}
 		});
 	}
