@@ -33,19 +33,20 @@
 
 	// Region must be defined
 	AWS.config.region = 'us-east-1';
-	var cognitoUser;
+
 	// User pool
 	var poolData = {
 			UserPoolId : 'us-east-1_MYnlnSKp6', // Your user pool id here
 			ClientId : '5d3s9jg6k9rupvjddl0rjr7h8j' // Your app client id here
 	};
-	// Identity pool
-	var identityPoolId = "us-east-1:eba34910-30e3-4b75-8540-8ee026e6c442"
-	var identityId;
 
-	// Cognito Sync
-	var cognitosync;
+	// Your identity pool id here
+	var identityPoolId = "us-east-1:eba34910-30e3-4b75-8540-8ee026e6c442"
+
+	// Cognito Sync store name
 	var cognitoDatasetName = "backspace-users";
+
+	var cognitoUser, identityId, cognitosync;
 
 	// Sign Up
 	function signUp(){
@@ -93,12 +94,12 @@
 		];
 
 		console.log("Adding attributes");
-
 		var attributeList = [];
 		for (var a=0; a<attributes.length; ++a){
 	    var attributeTemp = new AmazonCognitoIdentity.CognitoUserAttribute(attributes[a]);
 	    attributeList.push(attributeTemp);
 		}
+
 		console.log("Signing up");
 		$('#signUpModal').modal("hide"); // Close the modal window
 		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
@@ -164,7 +165,7 @@
 		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 			IdentityPoolId: identityPoolId,
 			Logins : {
-				// Change the key below according to the specific region your user pool is in.
+				// Change the key below according to your user pool and region.
 				'cognito-idp.us-east-1.amazonaws.com/us-east-1_MYnlnSKp6' : idToken
 			}
 		});
