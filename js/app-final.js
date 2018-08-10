@@ -121,10 +121,10 @@
 		  else {
 				console.log(JSON.stringify(data));           // successful response
 				if (data.UserConfirmed) {
-					bootbox.alert('Please check your email for a verification link.');
+					bootbox.alert('Sign up successful.');
 				}
 				else{
-					bootbox.alert('Sign up successful.');
+					bootbox.alert('Please check your email for a verification link.');
 				}
 			}
 		});
