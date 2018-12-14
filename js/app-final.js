@@ -389,7 +389,7 @@ function addRecord(cognitoSyncToken, cognitoSyncCount){
 				'test': 'It worked!'
 			}
 			var temp = JSON.stringify(data);
-			var bucketName = 'backspace-lab-pcoady';
+			var bucketName = 'backspace-lab-pcoady'; /* change to your bucket name!! */
 	    var objParams = {
 	        Bucket: bucketName,
 	        Key: key,
